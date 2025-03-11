@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import './App.css'
 
 function App() {
-  const [socket, setSocket] = useState<WebSocket | null>(null);
+  const [socket, setSocket] = useState<null | WebSocket>(null);
   const [message, setMessage]  = useState("")
   const [ chat, setChat ] = useState("");
 
@@ -11,11 +11,11 @@ function App() {
     newSocket.onopen = () => {
       console.log('Connection established');
       newSocket.send('Hello Server!');
+      setSocket(newSocket);
     }
     newSocket.onmessage = (message) => {
       setMessage(message.data)
-    }
-    setSocket(newSocket);
+    }    
     return () => newSocket.close();
   }, [])
 
